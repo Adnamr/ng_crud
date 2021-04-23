@@ -1,0 +1,78 @@
+<div class="row mt-2">
+
+  <div class="col-6">
+
+    <h2>List of Tasks</h2>
+
+  </div>
+  <div class="col-6">
+
+    <div class="float-right">
+      <button (click)="showFAdd = !showFAdd" class="btn btn-info">Add task</button>
+    </div>
+
+  </div>
+
+</div>
+
+<div *ngIf="showFAdd" class="row h-100 justify-content-center align-items-center mt-5">
+
+  <div class="col-6">
+
+    <div class="form-group">
+      <label for="label">Label</label>
+      <input id="label" [(ngModel)]="myTask.label" type="text" class="form-control" placeholder="Add task">
+    </div>
+    <div class="form-check">
+      <input [(ngModel)]="myTask.completed" d type="checkbox" class="form-check-input" id="completed">
+      <label class="form-check-label" for="completed">Completed</label>
+    </div>
+    <button *ngIf="!showFUpdate" (click)="create()" class="btn btn-block btn-success">
+      <i class="fa fa-plus"></i>
+      Add
+    </button>
+
+    <button *ngIf="showFUpdate" (click)="update(myTask)" class="btn btn-block btn-warning">
+      <i class="fa fa-edit"></i>
+      Update
+    </button>
+
+  </div>
+
+</div>
+
+
+
+<div class="row h-100 justify-content-center align-items-center mt-5">
+
+    <div class="col-6">
+
+      <ul class="list-group">
+          <input (keyup)="search()" [(ngModel)]="searchText" placeholder="Search..." class="form-control">
+
+        <li *ngFor="let task of tasks" class="list-group-item">
+          <button (click)="toggleUpdate(task)" class="btn btn-info btn-sm">
+            <i class="fa fa-edit"></i>
+          </button>
+          <button (click)="delete(task.id)" class="btn btn-danger btn-sm mx-1">
+            <i class="fa fa-trash"></i>
+          </button>
+
+          {{task.label}}
+          <span [ngClass]="{
+          'btn-success': task.completed,
+          'btn-danger': !task.completed
+          }" class="badge float-right">
+            <i (click)="toggleStatus(task)" [ngClass]="{
+            'fa-thumbs-up': task.completed,
+            'fa-thumbs-down': !task.completed
+            }" class="fa"></i>
+          </span>
+
+        </li>
+
+      </ul>
+
+    </div>
+
+</div>
